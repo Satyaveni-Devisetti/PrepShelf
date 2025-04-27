@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Books & PDFs - PrepShelf</title>
+    <link rel="stylesheet" href="./navbar.css">
+    <link rel="icon" type="image/png" href="images/logo.png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        section {
+            position: relative;
+            margin-top: 100px;
+            margin-bottom: 50px;
+        }
+
+        .upload-section {
+            max-width: 800px;
+            margin: 30px auto;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 30px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-control:focus {
+            border-color: #435296;
+            box-shadow: 0 0 0 0.2rem rgba(67, 82, 150, 0.25);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background-color: #435296;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background-color: #5466b3;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .toggle-buttons .btn {
+            flex: 1;
+            text-align: center;
+            opacity: 0.7;
+        }
+
+        .toggle-buttons .btn.active {
+            opacity: 1;
+            background-color: #2ecc71;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .uploaded-items {
+            margin-top: 30px;
+        }
+
+        .uploaded-item {
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .uploaded-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .uploaded-item-info {
+            flex-grow: 1;
+        }
+
+        .uploaded-item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .status-message {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .file-drop-area {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+            position: relative;
+        }
+
+        .file-drop-area:hover,
+        .file-drop-area.dragover {
+            border-color: #435296;
+            background-color: #f0f2f5;
+        }
+
+        .file-drop-area input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-drop-area i {
+            font-size: 2em;
+            color: #435296;
+            margin-bottom: 10px;
+        }
+
+        .file-info {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .file-info.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .preview-container {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .preview-container img {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="./images/logo.png" class="logo" alt="logo"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="books.html"><i class="fas fa-search"></i> Search Books</a></li>
+                    <li class="nav-item"><a class="nav-link" href="home.html#profile"><i class="fas fa-user"></i> My Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="home.html#contact"><i class="fas fa-phone"></i> Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="logout()"><i class="fas fa-sign-in-alt"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section>
+        <div class="upload-section">
+            <h2 class="text-center mb-4">Upload Books & PDFs</h2>
+            <div class="toggle-buttons">
+                <button class="btn active" onclick="showBooksUpload(this)">Add Book</button>
+                <button class="btn" onclick="showPdfsUpload(this)">Add PDF</button>
+            </div>
+
+            <div id="statusMessage" class="status-message"></div>
+
+            <form id="booksUpload" class="upload-form" onsubmit="uploadBook(event)">
+                <div class="form-group">
+                    <label for="bookTitle">Book Title</label>
+                    <input type="text" id="bookTitle" class="form-control" placeholder="Enter book title" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookAuthor">Author</label>
+                    <input type="text" id="bookAuthor" class="form-control" placeholder="Enter author name" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookDescription">Description</label>
+                    <textarea id="bookDescription" class="form-control" rows="3" placeholder="Enter book description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Book Cover Image</label>
+                    <div class="file-drop-area" id="bookCoverDrop">
+                        <i class="fas fa-image"></i>
+                        <p>Drag & drop a cover image or click to select</p>
+                        <input type="file" id="bookCover" accept="image/*" onchange="handleFileSelect(this, 'cover')">
+                        <div class="file-info" id="bookCoverInfo"></div>
+                        <div class="preview-container" id="bookCoverPreview"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Upload Book File (PDF)</label>
+                    <div class="file-drop-area" id="bookFileDrop">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Drag & drop a PDF file or click to select</p>
+                        <input type="file" id="bookFile" accept=".pdf" onchange="handleFileSelect(this, 'pdf')">
+                        <div class="file-info" id="bookFileInfo"></div>
+                    </div>
+                </div>
+                <button type="submit" class="btn w-100">Upload Book</button>
+            </form>
+
+            <form id="pdfsUpload" class="upload-form hidden" onsubmit="uploadPdf(event)">
+                <div class="form-group">
+                    <label for="pdfTitle">PDF Title</label>
+                    <input type="text" id="pdfTitle" class="form-control" placeholder="Enter PDF title" required>
+                </div>
+                <div class="form-group">
+                    <label for="pdfDescription">Description</label>
+                    <textarea id="pdfDescription" class="form-control" rows="3" placeholder="Enter PDF description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Upload PDF File</label>
+                    <div class="file-drop-area" id="pdfFileDrop">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Drag & drop a PDF file or click to select</p>
+                        <input type="file" id="pdfFile" accept=".pdf" onchange="handleFileSelect(this, 'pdf')">
+                        <div class="file-info" id="pdfFileInfo"></div>
+                    </div>
+                </div>
+                <button type="submit" class="btn w-100">Upload PDF</button>
+            </form>
+        </div>
+
+        <div class="uploaded-items" id="uploadedItems">
+            <h3 class="text-center mb-4">Uploaded Items</h3>
+        </div>
+    </section>
+
+    <script>
+        // Initialize drag and drop functionality
+        document.querySelectorAll('.file-drop-area').forEach(dropArea => {
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, () => {
+                    dropArea.classList.add('dragover');
+                }, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, () => {
+                    dropArea.classList.remove('dragover');
+                }, false);
+            });
+
+            dropArea.addEventListener('drop', handleDrop, false);
+        });
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            const input = this.querySelector('input[type="file"]');
+            input.files = files;
+            handleFileSelect(input, input.accept.includes('image') ? 'cover' : 'pdf');
+        }
+
+        function handleFileSelect(input, type) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const fileInfo = document.getElementById(input.id + 'Info');
+            fileInfo.innerHTML = `
+                <strong>Selected file:</strong> ${file.name}<br>
+                <strong>Size:</strong> ${formatFileSize(file.size)}
+            `;
+            fileInfo.classList.add('show');
+
+            if (type === 'cover') {
+                const preview = document.getElementById(input.id + 'Preview');
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Cover preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showBooksUpload(btn) {
+            document.getElementById('booksUpload').classList.remove('hidden');
+            document.getElementById('pdfsUpload').classList.add('hidden');
+            document.querySelectorAll('.toggle-buttons .btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function showPdfsUpload(btn) {
+            document.getElementById('pdfsUpload').classList.remove('hidden');
+            document.getElementById('booksUpload').classList.add('hidden');
+            document.querySelectorAll('.toggle-buttons .btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function showStatus(message, isError = false) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message ${isError ? 'status-error' : 'status-success'}`;
+            statusDiv.style.display = 'block';
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function uploadBook(event) {
+            event.preventDefault();
+            const bookFile = document.getElementById('bookFile').files[0];
+            
+            if (!bookFile) {
+                showStatus('Please select a PDF file to upload.', true);
+                return;
+            }
+
+            if (!bookFile.type.includes('pdf')) {
+                showStatus('Please upload a valid PDF file.', true);
+                return;
+            }
+
+            // Create object URL for the file
+            const fileUrl = URL.createObjectURL(bookFile);
+            
+            // Create book object
+            const book = {
+                id: Date.now().toString(),
+                title: document.getElementById('bookTitle').value,
+                author: document.getElementById('bookAuthor').value,
+                description: document.getElementById('bookDescription').value,
+                url: fileUrl,
+                uploadDate: new Date().toISOString(),
+                type: 'Book'
+            };
+
+            // Get existing books from localStorage
+            let books = JSON.parse(localStorage.getItem('books') || '[]');
+            books.push(book);
+            localStorage.setItem('books', JSON.stringify(books));
+
+            showStatus('Book uploaded successfully!');
+            event.target.reset();
+            document.querySelectorAll('.file-info').forEach(info => info.classList.remove('show'));
+            document.getElementById('bookCoverPreview').innerHTML = '';
+
+            // Redirect to books page after successful upload
+            setTimeout(() => {
+                window.location.href = 'books.html';
+            }, 2000);
+        }
+
+        function uploadPdf(event) {
+            event.preventDefault();
+            const pdfFile = document.getElementById('pdfFile').files[0];
+            
+            if (!pdfFile) {
+                showStatus('Please select a PDF file to upload.', true);
+                return;
+            }
+
+            if (!pdfFile.type.includes('pdf')) {
+                showStatus('Please upload a valid PDF file.', true);
+                return;
+            }
+
+            // Create object URL for the file
+            const fileUrl = URL.createObjectURL(pdfFile);
+            
+            // Create PDF object
+            const pdf = {
+                id: Date.now().toString(),
+                title: document.getElementById('pdfTitle').value,
+                description: document.getElementById('pdfDescription').value,
+                url: fileUrl,
+                uploadDate: new Date().toISOString(),
+                type: 'PDF'
+            };
+
+            // Get existing books from localStorage
+            let books = JSON.parse(localStorage.getItem('books') || '[]');
+            books.push(pdf);
+            localStorage.setItem('books', JSON.stringify(books));
+
+            showStatus('PDF uploaded successfully!');
+            event.target.reset();
+            document.querySelectorAll('.file-info').forEach(info => info.classList.remove('show'));
+
+            // Redirect to books page after successful upload
+            setTimeout(() => {
+                window.location.href = 'books.html';
+            }, 2000);
+        }
+
+        function logout() {
+            if(confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

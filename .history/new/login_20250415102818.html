@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Library Management System</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js' defer></script>
+    <style>
+        .logo{
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    position: relative;
+    bottom: 210px;
+    right: 350px;
+    }
+
+    </style>
+</head>
+<body>
+    <section>
+        <div class="navbar">
+            <img src="../images/logo.png" alt="here logo" class="logo">
+        </div>
+    <div class="login-box">
+        <form onsubmit="login(event)">
+            <h2>Login</h2>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" required>
+                <label>Email</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" required>
+                <label >Password</label>
+            </div>
+            <div class="remember-forgot">
+                <label><input type="checkbox">Remember me</label>
+                <a href="#">Forgot Password?</a>
+            </div>
+            <button type="submit">Login</button>
+            <div class="register-link">
+                <p>Don't have an account?<a href="registration.html">Register</a></p>
+            </div>
+        </form>
+    </div>
+</section>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+    function login(e) {
+        e.preventDefault();
+    
+        const email = document.querySelectorAll("input")[0].value.trim();
+        const password = document.querySelectorAll("input")[1].value;
+    
+        // Try to get user data from localStorage
+        const storedUser = localStorage.getItem(email);
+    
+        if (!storedUser) {
+            alert("User not found. Please register first.");
+            return;
+        }
+    
+        const user = JSON.parse(storedUser);
+    
+        if (user.password !== password) {
+            alert("Incorrect password. Please try again.");
+            return;
+        }
+    
+        alert("Login successful! Welcome " + user.name);
+        window.location.href = '../index.html';
+    }
+</script>
+</body>
+</html>

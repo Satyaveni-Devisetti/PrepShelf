@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+
+    <style>
+        *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+}
+        
+
+        .login-container {
+            background-color:transparent;
+            border: 2px solid rgba(255, 255, 255,.5);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .login-container button {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s;
+            /* Add this line */
+        }
+
+        .login-container button:hover {
+            background-color: #707880;
+            /* Change background on hover */
+            transform: scale(1.05);
+            /* Add this line for scaling effect */
+        }
+
+
+        h2 {
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        /* img{
+            background-position: left;
+        } */
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #8d949b;
+            /* Updated color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2d343a;
+            /* Darker shade for hover */
+        }
+
+        /* To differentiate buttons */
+        .student-login-btn {
+            background-color: #007BFF;
+            /* Blue color for student login */
+        }
+
+        .student-register-btn {
+            background-color: #28A745;
+            /* Green color for student register */
+        }
+
+        .admin-login-btn {
+            background-color: #6c757d;
+            /* Gray color for admin login */
+        }
+
+        /* Hover effect for each button */
+        .student-login-btn:hover {
+            background-color: #272e35;
+        }
+
+        .student-register-btn:hover {
+            background-color: #218838;
+        }
+
+        .admin-login-btn:hover {
+            background-color: #5a6268;
+        }
+        section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background:url('../images/download.jpeg') no-repeat;
+    background-size:cover ;
+    background-position: center;
+}
+.logo{
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    position: relative;
+    bottom: 210px;
+    right: 350px;
+    }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div class="navbar">
+        <img src="./images/logo.png" alt="here logo" class="logo">
+    </div>
+    <div class="login-container">
+        <h2>Login/Register</h2>
+        <!-- <img src="images/libbg.jpg"> -->
+
+        <!-- Student Login Button -->
+        <button class="student-login-btn" style="background-color: #6c757d; color: white;"
+            onclick="window.location.href='./new/login.html'">Student Login</button>
+
+        <!-- Student Register Button -->
+        <button class="student-register-btn" style="background-color: #6c757d; color: white;"
+            onclick="window.location.href='./new/registration.html'">Student Register</button>
+
+        <!-- Admin Login Button -->
+        <button class="admin-login-btn" style="background-color: #6c757d; color: white;"
+        onclick="window.location.href='./new/adminLogin.html'">Admin Login</button>
+    </div>
+    </section>
+
+</body>
+
+</html>

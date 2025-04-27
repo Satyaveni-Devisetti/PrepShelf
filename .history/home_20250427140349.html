@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PREPSHELF</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .bg-gradient-primary {
+            background: linear-gradient(to bottom, #004d99, #003366);
+            height: 500px;
+            /* Ensures full vertical height */
+            border-radius: 0px 100px 100px 0px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+        }
+
+        /* Profile Image */
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
+        }
+
+        .profile-image img {
+            width: 100%;
+            object-fit: cover;
+            /* Ensures the image fills the container */
+        }
+
+        /* Name and Description */
+        .name {
+            color: #e60000;
+            font-weight: bold;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+
+        .description {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #003366;
+            border-bottom: 2px solid #003366;
+            display: inline-block;
+            margin-bottom: 10px;
+
+        }
+
+        .name {
+            text-align: center;
+            font-size: 40px;
+        }
+
+        /* Profile Card Styling */
+        .profile-card {
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        /* Align dots and skills side by side */
+        .skills-list {
+            list-style-type: none;
+            /* Remove default list styling */
+            padding: 0;
+            margin: 0;
+        }
+
+        .skills-list li {
+            display: flex;
+            /* Use flexbox for alignment */
+            align-items: center;
+            margin-bottom: 8px;
+            /* Add space between items */
+            margin-left: 150px;
+        }
+
+        .skills-list li::before {
+            content: "•";
+            /* Add custom dot */
+            color: #003366;
+            /* Set dot color */
+            font-size: 20px;
+            /* Adjust dot size */
+            margin-right: 10px;
+            /* Space between dot and text */
+        }
+
+
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-image {
+                width: 400px;
+                height: 400px;
+            }
+
+            .name {
+                font-size: 22px;
+            }
+
+            .description {
+                font-size: 12px;
+            }
+            .skills-list li{
+                margin-left: 220px;
+            }
+        }
+
+    section {
+      padding: 60px 20px;
+      scroll-margin-top: 80px;
+      }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+
+    .navbar{
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: rgba(43, 55, 116);
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .navbar-nav .nav-link {
+      color: white;
+      font-size: 18px;
+      margin-left: 50px;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #ffc107;
+    }
+
+    .hero-section {
+      height: 100vh;
+      background-image: url('images/libbg.png');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .logo {
+      border-radius: 50%;
+      height: 50px;
+      width: 50px;
+    }
+
+    #search {
+      padding: 80px 20px;
+      margin-top: 30px;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #f1f1f1, #e0e0e0);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      max-width: 500px;
+      padding: 15px;
+      font-size: 18px;
+      border: 2px solid #ccc;
+      border-radius: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 30px;
+    }
+
+    .card-custom {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      text-align: center;
+      padding: 30px 20px;
+      height: 100%;
+    }
+
+    .card-custom:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .card-custom i {
+      font-size: 50px;
+      margin-bottom: 15px;
+      color: #007bff;
+    }
+    
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 20px;
+      background-color: #fff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-info p {
+      margin: 8px 0;
+    }
+
+
+    @media (max-width: 768px) {
+      .profile-info, .borrow-history {
+        padding: 20px;
+        width: 90%;
+      }
+    }
+
+    
+
+    .contact-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="email"]{
+            width: 93%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 150px;
+            width: 93%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #35b33f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #01b910;
+            transform: scale(1.05);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .contact-info p {
+            color: #555;
+        }
+
+
+
+    footer {
+        text-align: center;
+      padding: 15px;
+      background-color: rgba(43, 55, 116);
+      color: white;
+    }
+    #aboutus{
+      max-width: 100%;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Hero Section */
+/* Hero Section */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  background-image: url('/images/libbg.png'); /* Replace with your image URL */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hero Content */
+/* Hero Section */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  background-image: url('/images/libbg.png'); /* Replace with your image URL */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Hero Content */
+.hero-content {
+  text-align: center;
+}
+
+/* Hero Text */
+.hero-content h1 {
+  font-size: 3rem;
+  color: #181717;
+  font-family: 'Arial', sans-serif;
+  letter-spacing: 2px;
+  overflow: hidden; /* Ensures text doesn't overflow */
+  white-space: nowrap; /* Ensures text is displayed in one line */
+  border-right: 4px solid #fff; /* Makes the "cursor" effect */
+  padding-right: 10px;
+  width: 0;
+  animation: typing 2s steps(40) 1s forwards, blink 0.75s step-end infinite; /* Faster typing animation */
+}
+
+/* Typing Effect Animation */
+@keyframes typing {
+  to {
+    width: 100%;
+  }
+}
+
+/* Blinking Cursor Effect */
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+
+  </style>
+</head>
+
+<body>
+
+    
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#"><img src="./images/logo.png" class="logo" alt="logo"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#home"><i class="fas fa-home"></i> Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#borrow"><i class="fas fa-book-open"></i> About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#search"><i class="fas fa-search"></i> Search Books</a></li>
+          <li class="nav-item"><a class="nav-link" href="#profile"><i class="fas fa-user"></i> My Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact"><i class="fas fa-phone"></i> Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-sign-in-alt"></i> Logout</a></li>
+          
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+<!-- Hero Section -->
+<section class="hero-section" id="home">
+  <div class="hero-content">
+    <h1>The mini library now in your hands by 24/7</h1>
+  </div>
+</section>
+
+
+    <!-- About Section -->
+    <section id="borrow">
+      <div id="aboutus">
+        <h2>About Us</h2>
+        <p>PrepShelf is a dedicated online library designed to support GATE aspirants and engineering students. Our platform offers easy access to a wide range of GATE-oriented and subject-specific books, curated playlists, handwritten notes, and previous year question papers. Students can explore well-organized content tailored to their preparation needs, making learning more efficient and focused. Whether you are just starting or revising, PrepShelf is your trusted companion. Our goal is to simplify your preparation journey by bringing together all essential resources in one place. PrepShelf empowers students to learn smarter, stay consistent, and succeed in competitive exams with confidence. In today digital world everything is on internet and mobile. There is less time go to library and searching for books etc. Why we have not updated this technique we have lot of sources and in this digital world we have to develop that life is easier and smart. that's why we introduced mini digital library..Now every seconds when you have a phone on your hand then you also have a mini library. by using front end web technologies we developed this one. This library system consists user profile how many books he taken and returned. User also search subjects books gate books etc. The Information hub solution and operations Where Students from ECE can explore any type of Books, Courses,Gate Syallabus, Content Library Here.In this platform we can see easy way to prepare in short time because all type of books and gate papers with solutions and Semister syllabus and mid Content placed only one platform and add a each subject youtube links added their contents.There is also a another option to add a new book or any upcoming content here.Any user has to confirm that he or she belongs to academic students(RGUKT SKLM).First give their college email id and password, After e-mail id is valid they will go to the Home page and next they will start their preparations.</p>
+      </div>
+    </section>
+
+  <!-- Search Section -->
+  <section id="search" class="container text-center">
+    <h2 class="mb-4">Search Books</h2>
+    <div class="mb-4">
+      <input type="text" id="search-input" placeholder="Search books or materials...">
+      <button onclick="searchBooks()" class="btn btn-primary mt-2 mt-md-0"><i class="fas fa-search"></i> Search</button>
+    </div>
+
+    <div class="row justify-content-center g-4" id="card-container">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <a href="books.html" class="card-custom d-block" data-title="Books">
+          <i class="fas fa-book"></i>
+          <p>Books</p>
+        </a>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <a href="playlists.html" class="card-custom d-block" data-title="Courses">
+          <i class="fas fa-graduation-cap"></i>
+          <p>Courses</p>
+        </a>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <a href="gate.html" class="card-custom d-block" data-title="GATE">
+          <i class="fas fa-chalkboard-teacher"></i>
+          <p>GATE</p>
+        </a>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <a href="content.html" class="card-custom d-block" data-title="Content Library">
+          <i class="fas fa-folder-open"></i>
+          <p>Content Library</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Profile Section -->
+  <section id="profile">
+    <div class="container mt-5" id="profile">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="bg-gradient-primary">
+                    <div class="profile-image mx-auto d-block">
+                        <img src="images/logo.png" alt="Profile Image" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="profile-card p-4">
+                    <h1 class="name" id="profileName"></h1>
+                    <p class="description" id="profileDescription"></p>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h3 class="section-title">PERSONAL INFORMATION</h3>
+                            <p><strong>DOB:</strong> <span id="profileDOB"></span></p>
+                            <p><strong>Gender:</strong> <span id="profileGender"></span></p>
+                            <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="section-title">EDUCATION</h3>
+                            <p><strong>Branch:</strong> <span id="profileBranch"></span></p>
+                            <p><strong>Skills:</strong></p>
+                            <ul class="skills-list" id="profileSkills">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+
+
+  <!-- Contact Section -->
+
+  <section id="contact">
+    <div class="contact-container">
+    <h2>Contact Us</h2>
+    <form  id="contact-form">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Your name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Your email" required>
+
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" name="subject" placeholder="Subject of your message" required>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="Write your message here..." required></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+    <div class="contact-info">
+      <p>For more information, contact: support@prepshelf.com</p>
+      <p>Phone: +1-234-567-890</p>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("x8-tX_fnskw7-2VUb"); // Replace with your EmailJS Public Key
+  })();
+
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    emailjs.send("service_6vrc2ew", "template_pr4wl0l", {
+  from_name: document.getElementById("name").value,
+  from_email: document.getElementById("email").value,
+  subject: document.getElementById("subject").value,
+  message: document.getElementById("message").value
+})
+.then(() => {
+  alert("Message sent!");
+}, (error) => {
+  console.error("EmailJS Error:", error);
+  alert("Failed to send.");
+});
+  });
+
+//    <section id="contact">
+//     <div class="contact-container">
+//     <h2>Contact Us</h2>
+//     <form  id="contact-form">
+//       <label for="name">Name</label>
+//       <input type="text" id="name" name="name" placeholder="Your name" required>
+
+//       <label for="email">Email</label>
+//       <input type="email" id="email" name="email" placeholder="Your email" required>
+
+//       <label for="subject">Subject</label>
+//       <input type="text" id="subject" name="subject" placeholder="Subject of your message" required>
+
+//       <label for="message">Message</label>
+//       <textarea id="message" name="message" placeholder="Write your message here..." required></textarea>
+
+//       <button type="submit">Submit</button>
+//     </form>
+//     <div class="contact-info">
+//       <p>For more information, contact: support@digitallibrary.com</p>
+//       <p>Phone: +1-234-567-890</p>
+//     </div>
+// </div>
+
+// <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js">
+<!-- </script>
+ <script> -->
+//   (function(){
+//     emailjs.send("service_6vrc2ew", "template_pr4wl0l", {
+//       from_name: document.getElementById("name").value,
+//       subject: document.getElementById("subject").value,
+//       message: 
+//         "Sender's Email: " + document.getElementById("email").value + "\n\n" +
+//         "Message:\n" + document.getElementById("message").value
+//     })
+//     .then(() => {
+//       alert("Message sent!");
+//     }, (error) => {
+//       console.error("EmailJS Error:", error);
+//       alert("Failed to send.");
+//     });
+
+
+  //   emailjs.sendForm('service_6vrc2ew', 'template_x9h8azi', this)
+  //     .then(function() {
+  //       alert('Message sent successfully!');
+  //     }, function(error) {
+  //       alert('Failed to send message. Please try again later.', error);
+  //     });
+//   });
+// </script> 
+
+//   </section>
+
+  
+  
+
+  // Footer 
+  <footer>
+    &copy; 2024-25 Major Project Batch-46. All rights reserved.
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    function searchBooks() {
+      const input = document.getElementById("search-input").value.toLowerCase();
+      const cards = document.querySelectorAll(".card-custom");
+      let found = false;
+
+      cards.forEach(card => {
+        const title = card.getAttribute("data-title").toLowerCase();
+        if (title.includes(input)) {
+          found = true;
+          window.location.href = card.href;
+        }
+      });
+
+      if (!found) {
+        alert("No matching results found.");
+      }
+    }
+
+    document.getElementById("search-input").addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        searchBooks();
+      }
+    });
+  </script>
+
+  <script>
+    // Load profile data when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+            // Update profile information
+            document.getElementById('profileName').textContent = currentUser.name;
+            document.getElementById('profileDescription').textContent = currentUser.about || "A dedicated learner with experience in graduating Computer Science Engineering with good results and cross-teams collaboration. Excited to partner with like-minded individuals to achieve goals like design, implement, and securing the various softwares.";
+            document.getElementById('profileDOB').textContent = currentUser.dob;
+            document.getElementById('profileMobile').textContent = currentUser.mobile;
+            document.getElementById('profileGender').textContent = currentUser.gender;
+            document.getElementById('profileEmail').textContent = currentUser.email;
+            document.getElementById('profileBranch').textContent = currentUser.branch;
+
+            // Update skills list
+            const skillsList = document.getElementById('profileSkills');
+            skillsList.innerHTML = ''; // Clear existing skills
+            currentUser.skills.forEach(skill => {
+                const li = document.createElement('li');
+                li.textContent = skill;
+                skillsList.appendChild(li);
+            });
+        } else {
+            // Redirect to login if no user is logged in
+            window.location.href = 'new/login.html';
+        }
+    });
+  </script>
+</body>
+
+</html>  
