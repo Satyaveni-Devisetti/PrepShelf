@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PREPSHELF</title>
-  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="icon" type="image/png" href="logo.png">
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
@@ -88,36 +88,50 @@
             background: #fff;
         }
 
-        /* Align dots and skills side by side */
+        /* Update the skills section styling */
         .skills-list {
             list-style-type: none;
-            /* Remove default list styling */
             padding: 0;
             margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .skills-list li {
-            display: flex;
-            /* Use flexbox for alignment */
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 8px;
-            /* Add space between items */
-            margin-left: 150px;
+            background-color: #f0f2f5;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #003366;
+            margin: 5px;
         }
 
         .skills-list li::before {
             content: "•";
-            /* Add custom dot */
             color: #003366;
-            /* Set dot color */
             font-size: 20px;
-            /* Adjust dot size */
-            margin-right: 10px;
-            /* Space between dot and text */
+            margin-right: 8px;
         }
 
+        /* Update the skills container */
+        .skills-container {
+            margin-top: 15px;
+        }
 
-
+        /* Make skills section responsive */
+        @media (max-width: 768px) {
+            .skills-list {
+                justify-content: center;
+            }
+            
+            .skills-list li {
+                font-size: 12px;
+                margin: 3px;
+            }
+        }
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -132,9 +146,6 @@
 
             .description {
                 font-size: 12px;
-            }
-            .skills-list li{
-                margin-left: 220px;
             }
         }
 
@@ -339,7 +350,7 @@
   position: relative;
   width: 100%;
   height: 100vh; /* Full viewport height */
-  background-image: url('/images/libbg.png'); /* Replace with your image URL */
+  background-image: url('libbg.png'); /* Replace with your image URL */
   background-size: cover;
   background-position: center;
   display: flex;
@@ -353,7 +364,7 @@
   position: relative;
   width: 100%;
   height: 100vh; /* Full viewport height */
-  background-image: url('/images/libbg.png'); /* Replace with your image URL */
+  background-image: url('libbg.png'); /* Replace with your image URL */
   background-size: cover;
   background-position: center;
   display: flex;
@@ -405,7 +416,7 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#"><img src="./images/logo.png" class="logo" alt="logo"></a>
+      <a class="navbar-brand" href="#"><img src="logo.png" class="logo" alt="logo"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -483,7 +494,7 @@
             <div class="col-md-4">
                 <div class="bg-gradient-primary">
                     <div class="profile-image mx-auto d-block">
-                        <img src="images/logo.png" alt="Profile Image" />
+                        <img src="logo.png" alt="Profile Image" />
                     </div>
                 </div>
             </div>
@@ -503,8 +514,10 @@
                             <h3 class="section-title">EDUCATION</h3>
                             <p><strong>Branch:</strong> <span id="profileBranch"></span></p>
                             <p><strong>Skills:</strong></p>
-                            <ul class="skills-list" id="profileSkills">
-                            </ul>
+                            <div class="skills-container">
+                                <ul class="skills-list" id="profileSkills">
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -664,7 +677,6 @@
             document.getElementById('profileName').textContent = currentUser.name;
             document.getElementById('profileDescription').textContent = currentUser.about || "A dedicated learner with experience in graduating Computer Science Engineering with good results and cross-teams collaboration. Excited to partner with like-minded individuals to achieve goals like design, implement, and securing the various softwares.";
             document.getElementById('profileDOB').textContent = currentUser.dob;
-            document.getElementById('profileMobile').textContent = currentUser.mobile;
             document.getElementById('profileGender').textContent = currentUser.gender;
             document.getElementById('profileEmail').textContent = currentUser.email;
             document.getElementById('profileBranch').textContent = currentUser.branch;
@@ -672,14 +684,20 @@
             // Update skills list
             const skillsList = document.getElementById('profileSkills');
             skillsList.innerHTML = ''; // Clear existing skills
-            currentUser.skills.forEach(skill => {
-                const li = document.createElement('li');
-                li.textContent = skill;
-                skillsList.appendChild(li);
-            });
+            
+            if (currentUser.skills) {
+                // Split skills string into array if it's not empty
+                const skillsArray = currentUser.skills.split(',').map(skill => skill.trim()).filter(skill => skill);
+                
+                skillsArray.forEach(skill => {
+                    const li = document.createElement('li');
+                    li.textContent = skill;
+                    skillsList.appendChild(li);
+                });
+            }
         } else {
             // Redirect to login if no user is logged in
-            window.location.href = 'new/login.html';
+            window.location.href = 'login.html';
         }
     });
   </script>

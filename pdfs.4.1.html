@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDFs-1.1</title>
+    <title>PDFs - Digital Library System</title>
     <link rel="icon" type="image/png" href="logo.png">
 
     <!-- Font Awesome CDN -->
@@ -135,63 +135,52 @@
     <!-- Navbar Section -->
     <nav>
         <div class="navbar">
-            <a href="index.html"><i class="fas fa-house"></i> Home</a>
-            <a href="borrow.html"><i class="fas fa-clock-rotate-left"></i> History</a>
-            <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
-            <a href="search.html"><i class="fas fa-magnifying-glass"></i> Search</a>
+            <a href="home.html#home"><i class="fas fa-house"></i> Home</a>
+            <a href="home.html#profile"><i class="fas fa-user"></i> Profile</a>
+            <a href="home.html#search"><i class="fas fa-magnifying-glass"></i> Search</a>
         </div>
     </nav>
 
     <!-- PDF Buttons and Upload Section -->
     <div class="container">
-        <a href="https://drive.google.com/drive/folders/1yILqTFIWByCwLn_8CeDkEYgKcxkXI5OW" target="_blank"
+        <a href="https://drive.google.com/drive/folders/1YiXJcQldF_hG8YEO7gfIaZMUXmepGHpi?usp=sharing" target="_blank"
             class="pdf-button">
-            <i class="fas fa-flask"></i> Engineering Physics
+            <i class="fas fa-signal"></i> MEMS
         </a>
-        <a href="https://drive.google.com/drive/folders/1zshGOhp2UTiU0rL0j32l_hqFKSykIfYt" target="_blank"
+        <a href="https://drive.google.com/drive/folders/1DSPZOKIi2FePtpflyr4Glz0ADyV9ZO0s?usp=sharing" target="_blank"
             class="pdf-button">
-            <i class="fa-solid fa-calculator"></i> Maths
+            <i class="fas fa-atom"></i> Machine Learning
         </a>
-        <a href="https://drive.google.com/drive/folders/1-ATKkH8ltNEF5FAum8VhD0IdbRC019Tu" target="_blank"
+        <a href="https://drive.google.com/drive/folders/1nC8c-KvcxzT0WuywxxuL3mknglN2UXcT" target="_blank"
             class="pdf-button">
-            <i class="fas fa-signal"></i> Signals and System
+            <i class="fas fa-microchip"></i> Medical Image Analasys
         </a>
-        <a href="https://drive.google.com/drive/folders/1-T-qR1BAuKovkZVZe4gHmZRceebd9g0z" target="_blank"
+        <a href="https://drive.google.com/drive/folders/1VHtW0V01caDgw38qjiLaumKg6tcLFKWT?usp=sharing" target="_blank"
             class="pdf-button">
-            <i class="fa fa-computer"></i> Programming Data Structures
+            <i class="fas fa-digital-tachograph"></i> Matrix Algebra
         </a>
-        <a href="https://drive.google.com/drive/folders/1Aw7_02eGs3Z2Aurr7i1IAQYbiPz2Uln_" target="_blank"
+        <a href="https://drive.google.com/drive/folders/1JsUwoiHVFHoBq5s84v3u_9dlyiaiauHL?usp=sharing" target="_blank"
             class="pdf-button">
-            <i class="fas fa-plug"></i> Electric Theory
+            <i class="fas fa-broadcast-tower"></i> Environamental Science
         </a>
         <!-- <a href="https://drive.google.com/drive/folders/1jRdzXpyITBUVH1QcHYYi__Y3UzNB6Doj" target="_blank"
             class="pdf-button">
             <i class="fas fa-wifi"></i> Optical Fiber Communication
         </a> -->
 
-        <!-- Upload Button -->
-        <label class="upload-button" for="pdf-upload">
-            <i class="fas fa-upload"></i> Add New PDF
-        </label>
-        <input type="file" id="pdf-upload" accept="application/pdf" />
+
 
         <!-- Back Button -->
         <a href="content.html" class="back-button">Back</a>
     </div>
 
     <script>
-        
+        // Back button functionality using history
         function goBack() {
             window.history.back();
         }
 
-        document.getElementById('pdf-upload').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                alert(`Selected PDF: ${file.name}`);
-               
-            }
-        });
+
     </script>
 </body>
 
